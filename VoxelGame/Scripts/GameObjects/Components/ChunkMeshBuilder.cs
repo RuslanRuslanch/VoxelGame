@@ -46,7 +46,7 @@ namespace VoxelGame.GameObjects.Components
                 return _blocks[position.X, position.Y, position.Z] == BlockType.Air;
             }
 
-            return false;
+            return true;
         }
 
         private Polygon[] GetBlockPolygons(BlockType type, Vector3i position)

@@ -10,7 +10,7 @@ namespace VoxelGame.GameObjects
     public sealed class Camera : GameObject
     {
         public const float ZNear = 0.01f;
-        public const float ZFar = 100.0f;
+        public const float ZFar = 1000.0f;
 
         public Matrix4 ProjectionMatrix { get; private set; } = Matrix4.Identity;
         public Matrix4 ViewMatrix { get; private set; } = Matrix4.Identity;

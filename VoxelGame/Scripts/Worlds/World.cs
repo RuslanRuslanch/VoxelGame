@@ -1,15 +1,13 @@
-﻿using OpenTK.Mathematics;
-using VoxelGame.Blocks;
+﻿using VoxelGame.Blocks;
 using VoxelGame.GameObjects;
-using VoxelGame.GameObjects.Components;
-using VoxelGame.Graphics;
-using VoxelGame.Resources;
 
 namespace VoxelGame.Worlds
 {
     public sealed class World
     {
         private readonly HashSet<GameObject> _gameObjects = new HashSet<GameObject>();
+
+        private ChunkGenerator _chunkGenerator;
 
         public Camera MainCamera { get; private set; }
 
@@ -41,28 +39,10 @@ namespace VoxelGame.Worlds
         {
             BlockCache.Initialize();
 
-            var terrainBuilder = new ChunkTerrainBuilder();
-            var meshBuilder = new ChunkMeshBuilder();
-
-            var texture = Resource.LoadTexture(@"Contents\Textures\TextureAtlas.png");
-            var shader = Resource.LoadShader(@"Contents\Shaders\BlockVertexShader.vert", @"Contents\Shaders\BlockFragmentShader.frag");
-            var material = new Material(texture, shader);
-
-            for (int x = -16; x < 16; x++)
-            {
-                for (int z = -16; z < 16; z++)
-                {
-                    var chunk = new Chunk(this);
-
-                    chunk.Initialize(material, terrainBuilder, meshBuilder);
-
-                    chunk.Transform.SetPosition(new Vector3(x, 0f, z) * Chunk.Width);
-
-                    Register(chunk);
-                }
-            }
-
             var camera = new Camera(this);
+            _chunkGenerator = new ChunkGenerator(camera, this);
+
+            _chunkGenerator.Initialize();
 
             Register(camera);
         }
@@ -95,6 +75,8 @@ namespace VoxelGame.Worlds
 
         public void Tick()
         {
+            _chunkGenerator.Spawn();
+
             foreach (var gameObject in _gameObjects)
             {
                 gameObject.Tick();
