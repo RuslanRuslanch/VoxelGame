@@ -1,4 +1,5 @@
 ﻿using OpenTK.Mathematics;
+using VoxelGame.Blocks;
 using VoxelGame.GameObjects;
 using VoxelGame.GameObjects.Components;
 using VoxelGame.Graphics;
@@ -8,7 +9,7 @@ namespace VoxelGame.Worlds
 {
     public sealed class ChunkGenerator
     {
-        private readonly Dictionary<Vector2i, Chunk> _chunks = new Dictionary<Vector2i, Chunk>();
+        public readonly Dictionary<Vector2i, Chunk> Chunks = new Dictionary<Vector2i, Chunk>();
         
         private readonly Camera _camera;
         private readonly World _world;
@@ -65,14 +66,14 @@ namespace VoxelGame.Worlds
                 {
                     var chunkPosition = new Vector2i(x, y) + _lastPlayerChunkPosition;
 
-                    if (_chunks.ContainsKey(chunkPosition))
+                    if (Chunks.ContainsKey(chunkPosition))
                     {
                         continue;
                     }
 
                     var chunk = SpawnChunk(chunkPosition);
 
-                    _chunks.Add(chunkPosition, chunk);
+                    Chunks.Add(chunkPosition, chunk);
                     _world.Register(chunk);
                 }
             }

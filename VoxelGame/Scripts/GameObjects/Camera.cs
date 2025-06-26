@@ -86,11 +86,11 @@ namespace VoxelGame.GameObjects
 
             if (Input.Keyboard.IsKeyDown(Keys.Left))
             {
-                rotation += 10f;
+                rotation -= 10f;
             }
             if (Input.Keyboard.IsKeyDown(Keys.Right))
             {
-                rotation -= 10f;
+                rotation += 10f;
             }
 
             Transform.Move(direction * (15f * delta));

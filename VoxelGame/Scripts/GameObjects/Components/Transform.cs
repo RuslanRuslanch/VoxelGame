@@ -32,6 +32,8 @@ namespace VoxelGame.GameObjects.Components
 
             LoadModelMatrix();
             RecalculateDirections();
+
+            Console.WriteLine($"Forward: {Forward}");
         }
 
         public void SetScale(Vector3 scale)
@@ -54,6 +56,8 @@ namespace VoxelGame.GameObjects.Components
 
             LoadModelMatrix();
             RecalculateDirections();
+
+            Console.WriteLine($"Forward: {Forward}");
         }
 
         private void LoadModelMatrix()
@@ -78,7 +82,7 @@ namespace VoxelGame.GameObjects.Components
             var sinY = (float)Math.Sin(Rotation.Y);
 
             var forward = new Vector3(
-                -sinY * cosX,
+                sinY * cosX,
                 sinX,
                 -cosY * cosX
             );
